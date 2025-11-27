@@ -26,12 +26,6 @@ from graph_model import (
     # load_checkpoint
 )
 
-from graph_prompt import (
-    SentenceGraphPromptClassifier,
-    SentenceGATGraphPromptClassifier,
-    SentenceSAGEGraphPromptClassifier,
-)
-
 from unigraph import UniGraphGGraphClassifier
 
 # Device selection (CUDA -> MPS -> CPU)
@@ -54,9 +48,6 @@ def model_mapper(model_name):
         "SentenceDGATGraphClassifier": SentenceDGATGraphClassifier,
         "SentenceDGSAGEGraphClassifier": SentenceDGSAGEGraphClassifier,
         "UniGraphGGraphClassifier": UniGraphGGraphClassifier,
-        "SentenceGraphPromptClassifier": SentenceGraphPromptClassifier,
-        "SentenceGATGraphPromptClassifier": SentenceGATGraphPromptClassifier,
-        "SentenceSAGEGraphPromptClassifier": SentenceSAGEGraphPromptClassifier,
     }
     return model_map.get(model_name, None)
 

@@ -22,7 +22,6 @@ from torch_geometric.data import Data as PyGData
 from torch_geometric.data import DataLoader
 
 from utils_cli import parse_args
-from utils_torch import trainer_by_step, trainer_by_epochs
 from pipeline import get_graph_dataset
 
 from graph_model import SentenceGraphLinkPredictor
