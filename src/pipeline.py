@@ -16,7 +16,7 @@ from transformers import AutoTokenizer
 # from torch_geometric.data import Data as PyGData
 # from torch_geometric.data import Dataset as PyGDataset
 from torch_geometric.utils import k_hop_subgraph
-from graph_nli_preprocess import transform_document
+from graph_preprocess import transform_document
 # from graph_model import sample_negative_edges
 from graph_model import sample_negative_edges_v2
 
