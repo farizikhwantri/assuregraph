@@ -224,13 +224,7 @@ class DocumentGraphDataset(InMemoryDataset):
         torch.save((data, slices), self.processed_paths[0])
 
 def main():
-    default_folder = "/Users/fariz/repositories/REng-xai-cert/data/sac_gdpr/merged_traced"
-    default_file_path = "test_data_docname.json"
-    file_path = None
-    if len(sys.argv) > 1:
-        file_path = sys.argv[1]
-    else:
-        file_path = os.path.join(default_folder, default_file_path)
+    file_path = sys.argv[1]
 
     hop_file_path = file_path
     with open(hop_file_path, "r") as f:
@@ -254,14 +248,6 @@ def main():
         if 'node_labels' in hop_graph:
             print("\nNode Labels:")
             print(hop_graph["node_labels"])
-
-    # dataset_root = "/Users/fariz/repositories/REng-xai-cert/data/sac_gdpr/merged_traced"
-    # dataset = DocumentGraphDataset(root=dataset_root, filename="test_data_docname.json")
-
-    # print(f"Number of graphs: {len(dataset)}")
-    # data = dataset[0]
-    # print("Sentences:", data.sentences)
-    # print("Edge Index:", data.edge_index)
 
 if __name__ == "__main__":
     main()
