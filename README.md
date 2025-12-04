@@ -110,4 +110,14 @@ All datasets are converted into node/edge JSON.
 git clone https://anonymous.4open.science/r/assuregraph-B6BB
 cd assuregraph
 pip install -r requirements.txt
+```
+
+---
+## 📚 Dataset References
+
+1. Safety Trees: Leveraging Artifact Trees to Evolve and Reuse Safety Cases. Ankit Agrawal, Seyedehzahra Khoshmanesh, Michael Vierhauser, Mona Rahimi, Jane Cleland-Huang, Robyn Lutz. International Conference on Software Engineering (ICSE), Montreal, Canada, 2019.
+
+2. GPT-4 and Safety Case Generation: An Exploratory Analysis. Mithila Sivakumar, Alvine Boaye Belle, Jinjun Shan, Kimya Khakzad Shahandashti. arXiv, 2023. https://arxiv.org/abs/2312.05696
+
+3. Prompting GPT–4 to support automatic safety case generation. Mithila Sivakumar, Alvine B. Belle, Jinjun Shan, Kimya Khakzad Shahandashti. Expert Systems with Applications, 255, 2024. https://doi.org/10.1016/j.eswa.2024.124653
 
