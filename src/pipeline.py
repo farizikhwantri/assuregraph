@@ -615,9 +615,3 @@ def get_graph_dataset(
         processed_data = augmented
 
     return processed_data
-
-if __name__ == "__main__":
-    from kronfluence import Analyzer
-
-    model = construct_model()
-    print(Analyzer.get_module_summary(model))
