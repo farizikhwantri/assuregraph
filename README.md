@@ -5,8 +5,8 @@ Assurance Cases as Text-Attributed Graphs -->
 
 This repository contains the official implementation of the paper:
 
-> **Evaluation of LLM-Generated Assurance Cases through Argument Graph Analysis**  
-> (Under review)
+> **Evaluating Assurance Cases as Text-Attributed Graphs for Linking and Provenance Bias Analysis**  
+<!-- > (Under review) -->
 
 AssureGraph introduces a **graph evaluation framework** for analysing the structural quality, provenance, and reasoning patterns of *assurance cases*. These are structured argument documents used in safety, security, and regulatory compliance.
 
@@ -30,6 +30,7 @@ This repository provides:
 Assurance cases (CAE, GSN, Safety Trees) are widely used to justify safety/security properties of critical systems such as aircraft, software platforms, and machine learning components.
 
 Recent work attempts to **automatically generate assurance cases using LLMs**, but this introduces risks:
+
 - Missing or incorrect links  
 - Incorrect hierarchical structure  
 - Over-simplified or over-connected arguments  
@@ -105,6 +106,10 @@ We include three types of assurance-case datasets:
 | GSN-2 | Odu et al. | Graph | Human + GPT-4o | 190 |
 
 All datasets are converted into node/edge JSON.
+
+We used the previous study system prompt with minimal modification
+
+Based on the product requirements and predicates given for the assurance case patterns, given @Predicate AC generate @Predicate_ACP, and @Predicate_Structure, in a list format. Do not repeat Predicate AC. Give just the output without any explanation.
 
 Compiled dataset link: [Google Drive](https://drive.google.com/file/d/1HpR5BMo8tnvDkaNUrJiGjF-u4vDP87fb/view?usp=sharing)
 
