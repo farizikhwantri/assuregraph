@@ -1,0 +1,10 @@
+torch==2.2.1
+torch-geometric==2.5.3
+transformers==4.43.1
+datasets==2.19.2
+accelerate==1.1.1
+numpy==1.26.4
+networkx==3.2.1
+scikit-learn==1.6.0
+sentencepiece==0.2.0
+protobuf==3.20.2
