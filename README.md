@@ -110,7 +110,7 @@ All datasets are converted into node/edge JSON.
 We used the previous study system prompt with minimal modification
 
 <p align="center">
-  <img src="figures/LinkinPrompt.png" width="80%" />
+  <img src="figures/LinkinPrompt1.png" width="80%" />
 </p>
 
 Compiled dataset link: [Google Drive](https://drive.google.com/file/d/1HpR5BMo8tnvDkaNUrJiGjF-u4vDP87fb/view?usp=sharing)
