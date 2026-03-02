@@ -107,10 +107,26 @@ We include three types of assurance-case datasets:
 
 All datasets are converted into node/edge JSON.
 
+### Dataset Construction Method: Edge Construction
+
 We used the previous study system prompt with minimal modification
 
 <p align="center">
   <img src="figures/LinkinPrompt1.png" width="80%" />
+</p>
+
+### LLM Baseline for Link Prediction and Graph Classification
+
+Prompt to perform Linking Prediction as pair of node binary classification task
+
+<p align="center">
+  <img src="figures/LinkPredictionPrompt.png" width="80%" />
+</p>
+
+Prompt to perform graph/assurance provenance classification task of human vs LLM class for bias detection
+
+<p align="center">
+  <img src="figures/GraphClsPrompt.png" width="80%" />
 </p>
 
 Compiled dataset link: [Google Drive](https://drive.google.com/file/d/1HpR5BMo8tnvDkaNUrJiGjF-u4vDP87fb/view?usp=sharing)
