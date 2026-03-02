@@ -113,8 +113,6 @@ We used the previous study system prompt with minimal modification
   <img src="figures/LinkinPrompt.png" width="80%" />
 </p>
 
-Based on the product requirements and predicates given for the assurance case patterns, given @Predicate AC generate @Predicate_ACP, and @Predicate_Structure, in a list format. Do not repeat Predicate AC. Give just the output without any explanation.
-
 Compiled dataset link: [Google Drive](https://drive.google.com/file/d/1HpR5BMo8tnvDkaNUrJiGjF-u4vDP87fb/view?usp=sharing)
 
 ---
