@@ -8,7 +8,7 @@ This repository contains the official implementation of the paper:
 > **Evaluating Assurance Cases as Text-Attributed Graphs for Predicate Structure and Provenance Analysis**  
 > (Not Yet in Arxiv)
 
-AssureGraph introduces a **graph evaluation framework** for analysing the structural quality, provenance, and reasoning patterns of *assurance cases*. These are structured argument documents used in safety, security, and regulatory compliance.
+AssureGraph introduces a **graph evaluation framework** for analysing the semantic and structural patterns of *assurance cases*. These are structured argument documents used in safety, security, and regulatory compliance.
 
 We model assurance cases as **Text-Attributed Argument Graphs (TAGs)** and evaluate them using **Graph Neural Networks (GNNs)** for:
 
