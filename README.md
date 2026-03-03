@@ -6,7 +6,7 @@ Assurance Cases as Text-Attributed Graphs -->
 This repository contains the official implementation of the paper:
 
 > **Evaluating Assurance Cases as Text-Attributed Graphs for Predicate Structure and Provenance Analysis**  
-> (Not Yet in Arxiv)
+> (Under Review)
 
 AssureGraph introduces a **graph evaluation framework** for analysing the semantic and structural patterns of *assurance cases*. These are structured argument documents used in safety, security, and regulatory compliance.
 
