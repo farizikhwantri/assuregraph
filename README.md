@@ -12,7 +12,7 @@ AssureGraph introduces a **graph evaluation framework** for analysing the semant
 
 We model assurance cases as **Text-Attributed Argument Graphs (TAGs)** and evaluate them using **Graph Neural Networks (GNNs)** for:
 
-- **Link Prediction** — inferring missing or incorrect reasoning links  
+- **Link Prediction** — identify connections between argument elements
 - **Graph Classification** — distinguishing between *human-authored* and *LLM-generated* cases  
 - **Explainability** — analysing node/edge importance using GNNExplainer  
 
