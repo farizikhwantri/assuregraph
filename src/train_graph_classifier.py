@@ -2,6 +2,7 @@ import argparse
 import logging
 import os
 from typing import List, Dict, Any, Tuple
+import random
 
 import torch
 from torch import nn
@@ -22,8 +23,15 @@ from graph_model import (
     SentenceDGConvGraphClassifier,
     SentenceDGATGraphClassifier,
     SentenceDGSAGEGraphClassifier,
+    SentenceTextOnlyGraphClassifier,
     save_checkpoint,
     # load_checkpoint
+)
+
+from graph_prompt import (
+    SentenceGraphPromptClassifier,
+    SentenceGATGraphPromptClassifier,
+    SentenceSAGEGraphPromptClassifier,
 )
 
 from unigraph import UniGraphGGraphClassifier
@@ -47,7 +55,11 @@ def model_mapper(model_name):
         "SentenceDGConvGraphClassifier": SentenceDGConvGraphClassifier,
         "SentenceDGATGraphClassifier": SentenceDGATGraphClassifier,
         "SentenceDGSAGEGraphClassifier": SentenceDGSAGEGraphClassifier,
+        "SentenceTextOnlyGraphClassifier": SentenceTextOnlyGraphClassifier,
         "UniGraphGGraphClassifier": UniGraphGGraphClassifier,
+        "SentenceGraphPromptClassifier": SentenceGraphPromptClassifier,
+        "SentenceGATGraphPromptClassifier": SentenceGATGraphPromptClassifier,
+        "SentenceSAGEGraphPromptClassifier": SentenceSAGEGraphPromptClassifier,
     }
     return model_map.get(model_name, None)
 
@@ -204,6 +216,10 @@ def collate_graph_batch_pyg(
         return_tensors="pt"
     ).to(device)
 
+    # put batch to device
+    batch = batch.to(device)
+    # tokenized = {k: v.to(device) for k, v in tokenized.items()}
+
     targets = batch.y.to(device)  # shape [num_graphs]
     return tokenized, batch, targets
 
@@ -247,21 +263,28 @@ def train_epoch(
     train_loader: DataLoader,
     optimizer,
     criterion,
-    device: torch.device = DEVICE
+    device: torch.device = DEVICE,
+    step: int = 0,
+    grad_accumulation_steps: int = 1
 ) -> float:
     model.train()
     total_loss = 0.0
     num_batches = 0
 
+    local_step = 0
     # for tokenized, batch_edge_index, batch_vec, targets in train_loader:
     for tokenized, batch, targets in train_loader:
         # logits, _, _ = model(tokenized, batch_edge_index, batch_ids=batch_vec)  # [G, C]
         logits, _, _ = model(tokenized, batch.edge_index, batch_ids=batch.batch)  # [G, C]
         loss = criterion(logits, targets)
+        loss = loss / grad_accumulation_steps
 
-        optimizer.zero_grad()
         loss.backward()
-        optimizer.step()
+        local_step = local_step + 1
+        step = step + 1
+        if local_step % grad_accumulation_steps == 0:
+            optimizer.step()
+            optimizer.zero_grad()
 
         total_loss = total_loss + float(loss.item())
         num_batches = num_batches + 1
@@ -295,6 +318,7 @@ def main():
         filter_function=filter_function,
         negative_sampling=False
     )
+    random.shuffle(train_dataset)
     val_dataset = get_graph_dataset(
         data_name=args.dataset_name,
         model_name=args.model_name,
@@ -350,7 +374,7 @@ def main():
     model = model_cls(encoder_model=args.model_name, **model_config).to(DEVICE)
     tokenizer = model.encoder.tokenizer
 
-    # NEW: optionally load link predictor weights into the classifier
+    # optionally load link predictor weights into the classifier
     if getattr(args, "link_predictor_checkpoint", None):
         print(f"Initializing from link predictor: {args.link_predictor_checkpoint}")
         try:
@@ -359,8 +383,6 @@ def main():
                 model.load_from_link_predictor(
                     args.link_predictor_checkpoint,
                     device=DEVICE,
-                    map_encoder=True,
-                    map_gcn=True,
                     strict_shapes=True,
                     verbose=True,
                 )
@@ -398,9 +420,35 @@ def main():
         ),
     )
 
+    # for graphprompt init_prompts_from_support
+    if hasattr(model, "init_prompts_from_support"):
+        # param (tokenized_inputs, edge_index, labels: torch.Tensor, batch_ids: torch.Tensor = None):
+        print("Initializing prompts from support set.")
+        # create a tokenized inputs, edge_index, labels, batch_ids from train_dataset
+        # get one random batch from train_dataset
+        # shuffle train_dataset and take first N samples as support set
+        support_batch = random.sample(train_dataset, args.train_batch_size)
+        support_tokenized, support_batch, support_targets = collate_graph_batch_pyg(
+            support_batch,
+            tokenizer,
+            DEVICE,
+            label_encoder,
+            args.task_label_key
+        )
+        model.init_prompts_from_support(
+            support_tokenized,
+            support_batch.edge_index,
+            support_targets,
+            batch_ids=support_batch.batch
+        )
+
+    global_step = 0
     logger.info("Starting training the model")
     for epoch in range(1, args.num_train_epochs + 1):
-        avg_loss = train_epoch(model, train_loader, optimizer, criterion, device=DEVICE)
+        # shuffle training data each epoch
+        train_loader.shuffle = True
+        avg_loss = train_epoch(model, train_loader, optimizer, criterion, device=DEVICE,
+                               grad_accumulation_steps=args.grad_accumulation_steps, step=global_step)
         logger.info(f"Epoch {epoch}/{args.num_train_epochs}, Average Loss: {avg_loss:.4f}")
 
         if args.do_eval and epoch % args.do_eval == 0:
