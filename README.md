@@ -6,7 +6,7 @@ Assurance Cases as Text-Attributed Graphs -->
 This repository contains the official implementation of the paper:
 
 > **Evaluating Assurance Cases as Text-Attributed Graphs for Predicate Structure and Provenance Analysis**  
-> (Under Review)
+> EASE 2026 AI
 
 AssureGraph introduces a **graph evaluation framework** for analysing the semantic and structural patterns of *assurance cases*. These are structured argument documents used in safety, security, and regulatory compliance.
 
@@ -150,3 +150,16 @@ pip install -r requirements.txt
 
 3. Prompting GPT–4 to support automatic safety case generation. Mithila Sivakumar, Alvine B. Belle, Jinjun Shan, Kimya Khakzad Shahandashti. Expert Systems with Applications, 255, 2024. https://doi.org/10.1016/j.eswa.2024.124653
 
+---
+If you use the code or data from this repository in your work, please cite our paper. We appreciate your support in acknowledging our contributions!
+
+```@misc{ikhwantri2026evaluatingassurancecasestextattributed,
+      title={Evaluating Assurance Cases as Text-Attributed Graphs for Structure and Provenance Analysis}, 
+      author={Fariz Ikhwantri and Dusica Marijan},
+      year={2026},
+      eprint={2604.20577},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2604.20577}, 
+}
+```
